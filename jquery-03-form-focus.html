@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('form').blur(function(e) {
+            console.log('blur: ', e.target);
+        });
+
+        $('form').focusout(function(e) {
+            //console.log('focus out: ', e.target);
+            var target = e.target;
+            var form = document.forms[0];
+
+            //var position = Node.DOCUMENT_POSITION_CONTAINS + Node.DOCUMENT_POSITION_PRECEDING;
+
+        });
+
+        $('input[name="outer"]').focusout(function(e) {
+            console.log('outer focus out: ', e.target);
+        });
+
+        /*
+        $('input[name="outer"]').blur(function(e) {
+            console.log('outer blur: ', e.target);
+        });
+        */
+
+        $('input[name="outer"]').focusin(function(e) {
+            console.log('outer focus in: ', e.target);
+        });
+
+        /*
+        var form = document.forms[0];
+        var input1 = document.querySelector('input[name="input1"]');
+        var input2 = document.querySelector('input[name="input2"]');
+
+        // DOCUMENT_POSITION_CONTAINED_BY + DOCUMENT_POSITION_FOLLOWING = 20?
+        console.log(form.compareDocumentPosition(input1));
+        console.log(form.compareDocumentPosition(input2));
+
+        // DOCUMENT_POSITION_CONTAINS + DOCUMENT_POSITION_PRECEDING = 10?
+        console.log(input1.compareDocumentPosition(form));
+        console.log(input2.compareDocumentPosition(form));
+
+        console.log(Node.DOCUMENT_POSITION_CONTAINED_BY + Node.DOCUMENT_POSITION_FOLLOWING);
+        */
+
+    });
+
+</script>
+<body>
+    <form>
+        <input type="text"  name="input1" placeholder="test on focus" />
+        <input type="text" name="input2" placeholder="test on focus" />
+    </form>
+
+    <input type="text" name="outer">
+</body>
+</html>

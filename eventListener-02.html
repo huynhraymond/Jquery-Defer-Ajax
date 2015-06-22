@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            HTMLElement.prototype.on = function(events) {
+                var selector, data, handler;
+                var element = this;
+
+                function addListener(element, events, _handler) {
+                    events.split(' ').forEach(function (event) {
+                        element.addEventListener(event, _handler);
+                    });
+                }
+
+                switch (arguments.length) {
+                    case 2:
+                        handler = arguments[1];
+                        addListener(element, events, handler);
+                        break;
+
+                    case 3:
+                        if (typeof arguments[1] === 'string') {
+                            selector = arguments[1];
+                            handler = arguments[2];
+
+                            addListener(element, events, function (event) {
+                                // check if the event.target is a child of the element - which matches css selector
+                                var children = Array.prototype.splice.call(element.querySelectorAll(selector));
+
+                                if ( children.indexOf(event.target) !== -1 ) {
+                                    handler.call(element, event);
+                                }
+                            });
+                        }
+
+                        else {
+                            data = arguments[1];
+                            handler = arguments[2];
+
+                            addListener(element, events, function (event) {
+                                // attach data to the event object and invoke the handler
+                                event.data = data;
+                                handler.call(element, event);
+                            });
+                        }
+                        break;
+
+                    case 4:
+                        selector = arguments[1];
+                        data = arguments[2];
+                        handler = arguments[3];
+
+                        addListener(element, events, function (event) {
+                            event.data = data;
+                            var matched_children = Array.prototype.slice.call(element.querySelectorAll(selector));
+
+                            if (matched_children.indexOf(event.target) !== -1) {
+                                handler.call(element, event);
+                            }
+                        });
+
+                        break;
+                }
+            };
+
+            /*
+            document.body.firstElementChild.on('click', function(event) {
+                console.log(event.clientX);
+            });
+            */
+
+            document.body.firstElementChild.on('click', 'span', {name: 'Cuxi Huynh'}, function (event) {
+                console.log(event.clientX);
+                console.log(event.data.name);
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div>
+    <div>This a div</div>
+    <span>This is a span</span>
+    <a href="#">This is a hyperlink</a>
+</div>
+</body>
+</html>

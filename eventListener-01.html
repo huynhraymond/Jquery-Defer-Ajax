@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            HTMLButtonElement.prototype.on = function() {};
+            var btn = document.body.firstElementChild;
+            btn.addEventListener('click', test.bind(btn, 'Cuxi'));     // test.bind -> fn(event){ name }
+
+            function test(name, event) {
+                console.log(name);
+                console.log(event);
+                console.log(this === event.currentTarget);
+            }
+
+            btn.addEventListener('click', function(event) {
+                console.log("Basic addEventListener");
+                console.log(this === event.currentTarget);
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>Click</button>
+</body>
+</html>

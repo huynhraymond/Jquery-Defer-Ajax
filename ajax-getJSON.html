@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script>
+
+        $(function() {
+            //$.getJSON('https://api.github.com/search/repositories?q=nodejs', view);
+
+            // Promise approach
+            $.getJSON('https://api.github.com/search/repositories?', {q: 'nodejs'}).then( function(data) {
+                console.log(data);
+            }, function(jqXHR) {
+                console.log(jqXHR);
+            });
+        });
+
+        function view(data) {
+            var $result_div = $('#results');
+            console.log(data);
+            /*
+            $.each(data, function(key, val) {
+                array.push(val);
+            });  */
+
+            data.items.forEach(function(item) {
+                $('<div>').appendTo($result_div).addClass('repo')
+                        .append($('<div>').html(item.full_name))
+                        .append($('<div>').html(item.owner.login));
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div id="results"></div>
+</body>
+</html>
+
